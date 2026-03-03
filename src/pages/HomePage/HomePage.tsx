@@ -1,6 +1,6 @@
 import { useNavigate } from 'react-router-dom';
 import { Box, Typography, Button, Container } from '@mui/material';
-import backgroundImage from '/bgImage.jpg';
+import backgroundImage from '/bgImage.webp';
 
 const HomePage: React.FC = () => {
     const navigate = useNavigate();
