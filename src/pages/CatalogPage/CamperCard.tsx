@@ -50,7 +50,9 @@ const CamperCard: React.FC<CamperCardProps> = ({
                 bgcolor: 'background.paper',
                 border: '1px solid',
                 borderColor: 'divider',
-                borderRadius: '20px'
+                borderRadius: '20px',
+                contentVisibility: 'auto',
+                containIntrinsicSize: '1px 368px', // Average height to prevent layout shift
             }}
         >
             <Box sx={{ width: { xs: '100%', sm: 292 }, height: { xs: 200, sm: 320 }, flexShrink: 0, borderRadius: '10px', overflow: 'hidden' }}>
@@ -58,6 +60,7 @@ const CamperCard: React.FC<CamperCardProps> = ({
                     src={camper.gallery[0]?.thumb}
                     alt={camper.name}
                     loading="lazy"
+                    decoding="async"
                     style={{ width: '100%', height: '100%', objectFit: 'cover' }}
                 />
             </Box>
