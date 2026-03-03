@@ -1,10 +1,17 @@
-import styles from './Loader.module.css';
+import { Box, CircularProgress } from '@mui/material';
 
 const Loader: React.FC = () => {
     return (
-        <div className={styles.wrapper}>
-            <div className={styles.spinner} />
-        </div>
+        <Box
+            sx={{
+                display: 'flex',
+                justifyContent: 'center',
+                alignItems: 'center',
+                py: 8
+            }}
+        >
+            <CircularProgress />
+        </Box>
     );
 };
 

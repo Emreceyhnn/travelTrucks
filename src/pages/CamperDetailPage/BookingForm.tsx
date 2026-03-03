@@ -1,7 +1,7 @@
 import { useState, useCallback } from 'react';
 import toast from 'react-hot-toast';
 import type { BookingFormData } from '../../lib/type/camperDetail';
-import styles from './BookingForm.module.css';
+import { Box, Typography, TextField, Button } from '@mui/material';
 
 const BookingForm: React.FC = () => {
     const [formData, setFormData] = useState<BookingFormData>({
@@ -33,56 +33,82 @@ const BookingForm: React.FC = () => {
     );
 
     return (
-        <div className={styles.formCard}>
-            <h3 className={styles.title}>Book your campervan now</h3>
-            <p className={styles.subtitle}>
+        <Box
+            sx={{
+                bgcolor: 'background.paper',
+                border: '1px solid',
+                borderColor: 'divider',
+                borderRadius: '20px',
+                p: '40px',
+                position: 'sticky',
+                top: '88px'
+            }}
+        >
+            <Typography variant="h3" sx={{ fontSize: '20px', fontWeight: 600, color: 'text.primary', mb: '8px' }}>
+                Book your campervan now
+            </Typography>
+            <Typography sx={{ fontSize: '16px', color: 'text.secondary', mb: '24px', lineHeight: 1.5 }}>
                 Stay connected! We are always ready to help you.
-            </p>
-            <form className={styles.form} onSubmit={handleSubmit}>
-                <input
+            </Typography>
+            <Box
+                component="form"
+                onSubmit={handleSubmit}
+                sx={{ display: 'flex', flexDirection: 'column', gap: '14px' }}
+            >
+                <TextField
                     type="text"
                     name="name"
                     placeholder="Name*"
-                    className={styles.input}
+                    variant="outlined"
+                    fullWidth
                     value={formData.name}
                     onChange={handleChange}
                     required
                 />
-                <input
+                <TextField
                     type="email"
                     name="email"
                     placeholder="Email*"
-                    className={styles.input}
+                    variant="outlined"
+                    fullWidth
                     value={formData.email}
                     onChange={handleChange}
                     required
                 />
-                <input
+                <TextField
                     type="text"
                     name="bookingDate"
                     placeholder="Booking date*"
-                    className={styles.input}
+                    variant="outlined"
+                    fullWidth
                     value={formData.bookingDate}
                     onChange={handleChange}
-                    onFocus={(e) => (e.target.type = 'date')}
+                    onFocus={(e) => ((e.target as HTMLInputElement).type = 'date')}
                     onBlur={(e) => {
-                        if (!e.target.value) e.target.type = 'text';
+                        if (!e.target.value) (e.target as HTMLInputElement).type = 'text';
                     }}
                     required
                 />
-                <textarea
+                <TextField
                     name="comment"
                     placeholder="Comment"
-                    className={styles.textarea}
+                    variant="outlined"
+                    fullWidth
+                    multiline
+                    rows={4}
                     value={formData.comment}
                     onChange={handleChange}
-                    rows={4}
                 />
-                <button type="submit" className={styles.submitBtn}>
+                <Button
+                    type="submit"
+                    variant="contained"
+                    color="primary"
+                    sx={{ mt: '10px' }}
+                >
                     Send
-                </button>
-            </form>
-        </div>
+                </Button>
+            </Box>
+        </Box>
     );
 };
 

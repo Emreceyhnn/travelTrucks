@@ -6,7 +6,7 @@ import type { CatalogFilters } from '../../lib/type/catalog';
 import FilterPanel from './FilterPanel';
 import CamperCard from './CamperCard';
 import Loader from '../../components/Loader/Loader';
-import styles from './CatalogPage.module.css';
+import { Box, Typography, Button, Container } from '@mui/material';
 
 const CatalogPage: React.FC = () => {
     const dispatch = useAppDispatch();
@@ -19,7 +19,7 @@ const CatalogPage: React.FC = () => {
         if (items.length === 0) {
             dispatch(fetchCampers({ page: 1, filters }));
         }
-    }, []); // eslint-disable-line react-hooks/exhaustive-deps
+    }, [dispatch, items.length, filters]); // Fix exhaustive-deps
 
     const handleSearch = useCallback(
         (newFilters: CatalogFilters) => {
@@ -44,13 +44,27 @@ const CatalogPage: React.FC = () => {
     const hasMore = items.length < total;
 
     return (
-        <section className={styles.page}>
-            <div className={styles.container}>
+        <Box component="section" sx={{ pt: '88px', minHeight: '100vh', bgcolor: 'background.default' }}>
+            <Container
+                maxWidth={false}
+                sx={{
+                    maxWidth: 1440,
+                    px: { xs: '24px', md: '64px' },
+                    pb: '64px',
+                    display: 'flex',
+                    flexDirection: { xs: 'column', md: 'row' },
+                    gap: { xs: '32px', md: '64px' }
+                }}
+            >
                 <FilterPanel filters={filters} onSearch={handleSearch} />
-                <div className={styles.main}>
-                    {error && <p className={styles.error}>{error}</p>}
+                <Box sx={{ flex: 1, minWidth: 0 }}>
+                    {error && (
+                        <Typography color="error" align="center" sx={{ p: 3, fontSize: '16px' }}>
+                            {error}
+                        </Typography>
+                    )}
 
-                    <div className={styles.list}>
+                    <Box sx={{ display: 'flex', flexDirection: 'column', gap: '32px' }}>
                         {items.map((camper) => (
                             <CamperCard
                                 key={camper.id}
@@ -59,30 +73,38 @@ const CatalogPage: React.FC = () => {
                                 onToggleFavorite={handleToggleFavorite}
                             />
                         ))}
-                    </div>
+                    </Box>
 
                     {isLoading && <Loader />}
 
                     {!isLoading && items.length === 0 && !error && (
-                        <p className={styles.empty}>
+                        <Typography align="center" color="text.secondary" sx={{ p: 6, fontSize: '18px' }}>
                             No campers found. Try adjusting your filters.
-                        </p>
+                        </Typography>
                     )}
 
                     {hasMore && !isLoading && (
-                        <div className={styles.loadMoreWrapper}>
-                            <button
-                                type="button"
-                                className={styles.loadMore}
+                        <Box sx={{ display: 'flex', justifyContent: 'center', mt: '40px' }}>
+                            <Button
+                                variant="outlined"
                                 onClick={handleLoadMore}
+                                sx={{
+                                    borderColor: 'divider',
+                                    color: 'text.primary',
+                                    '&:hover': {
+                                        borderColor: 'primary.main',
+                                        color: 'primary.main',
+                                        backgroundColor: 'transparent'
+                                    }
+                                }}
                             >
                                 Load more
-                            </button>
-                        </div>
+                            </Button>
+                        </Box>
                     )}
-                </div>
-            </div>
-        </section>
+                </Box>
+            </Container>
+        </Box>
     );
 };
 

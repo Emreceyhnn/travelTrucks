@@ -1,27 +1,95 @@
 import { useNavigate } from 'react-router-dom';
-import styles from './HomePage.module.css';
+import { Box, Typography, Button, Container } from '@mui/material';
+import backgroundImage from '/bgImage.jpg';
 
 const HomePage: React.FC = () => {
     const navigate = useNavigate();
 
     return (
-        <section className={styles.hero}>
-            <div className={styles.overlay}>
-                <div className={styles.content}>
-                    <h1 className={styles.title}>Campers of your dreams</h1>
-                    <p className={styles.subtitle}>
-                        You can find everything you want in our catalog
-                    </p>
-                    <button
-                        className={styles.cta}
-                        onClick={() => navigate('/catalog')}
-                        type="button"
+        <Box
+            component="section"
+            sx={{
+                display: 'flex',
+                flexDirection: 'column',
+                minHeight: '100vh',
+                bgcolor: "black"
+            }}
+        >
+            <Box
+                sx={{
+                    pt: '72px',
+                    flex: 1,
+                    display: 'flex',
+                    flexDirection: 'column',
+
+                }}
+            >
+                <Box
+                    sx={{
+                        flex: 1,
+                        backgroundImage: `url(${backgroundImage})`,
+                        backgroundSize: 'cover',
+                        backgroundPosition: 'center',
+                        backgroundRepeat: 'no-repeat',
+                        position: 'relative',
+                        display: 'flex',
+
+                    }}
+                >
+                    <Container
+                        maxWidth={false}
+                        sx={{
+                            maxWidth: "90%",
+                            px: { xs: '12px', md: '12px' },
+                            mx: 'auto',
+                            position: 'relative',
+                            zIndex: 1,
+                            display: 'flex',
+                            flexDirection: 'column',
+                            justifyContent: 'center',
+                            alignItems: 'flex-start',
+
+                        }}
                     >
-                        View Now
-                    </button>
-                </div>
-            </div>
-        </section>
+                        <Box sx={{ maxWidth: 600 }}>
+                            <Typography
+                                variant="h1"
+                                component="h1"
+                                sx={{
+                                    fontSize: { xs: '36px', md: '48px' },
+                                    fontWeight: 600,
+                                    color: '#ffffff',
+                                    mb: '16px',
+                                    lineHeight: 1.2,
+                                }}
+                            >
+                                Campers of your dreams
+                            </Typography>
+                            <Typography
+                                variant="subtitle1"
+                                component="p"
+                                sx={{
+                                    fontSize: { xs: '18px', md: '24px' },
+                                    fontWeight: 600,
+                                    color: '#ffffff',
+                                    mb: '40px',
+                                    lineHeight: 1.4,
+                                }}
+                            >
+                                You can find everything you want in our catalog
+                            </Typography>
+                            <Button
+                                variant="contained"
+                                color="primary"
+                                onClick={() => navigate('/catalog')}
+                            >
+                                View Now
+                            </Button>
+                        </Box>
+                    </Container>
+                </Box>
+            </Box>
+        </Box>
     );
 };
 

@@ -1,5 +1,5 @@
 import type { Camper } from '../../lib/type/camper';
-import styles from './CamperFeatures.module.css';
+import { Box, Typography, Divider, Table, TableBody, TableRow, TableCell } from '@mui/material';
 
 interface CamperFeaturesProps {
     camper: Camper;
@@ -29,48 +29,49 @@ const CamperFeatures: React.FC<CamperFeaturesProps> = ({ camper }) => {
     };
 
     return (
-        <div className={styles.features}>
-            <div className={styles.tags}>
+        <Box sx={{ display: 'flex', flexDirection: 'column', gap: '44px' }}>
+            <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: '8px' }}>
                 {activeEquipment.map((item) => (
-                    <span key={item.label} className={styles.tag}>
+                    <Box
+                        key={item.label}
+                        sx={{
+                            display: 'flex', alignItems: 'center', gap: '8px', py: '12px', px: '18px',
+                            bgcolor: 'grey.100', borderRadius: '200px', fontSize: '14px', fontWeight: 500, color: 'text.primary'
+                        }}
+                    >
                         {item.label}
-                    </span>
+                    </Box>
                 ))}
-            </div>
+            </Box>
 
-            <div className={styles.details}>
-                <h3 className={styles.detailsTitle}>Vehicle details</h3>
-                <div className={styles.divider} />
-                <table className={styles.table}>
-                    <tbody>
-                        <tr>
-                            <td className={styles.label}>Form</td>
-                            <td className={styles.value}>{formLabels[camper.form] || camper.form}</td>
-                        </tr>
-                        <tr>
-                            <td className={styles.label}>Length</td>
-                            <td className={styles.value}>{camper.length}</td>
-                        </tr>
-                        <tr>
-                            <td className={styles.label}>Width</td>
-                            <td className={styles.value}>{camper.width}</td>
-                        </tr>
-                        <tr>
-                            <td className={styles.label}>Height</td>
-                            <td className={styles.value}>{camper.height}</td>
-                        </tr>
-                        <tr>
-                            <td className={styles.label}>Tank</td>
-                            <td className={styles.value}>{camper.tank}</td>
-                        </tr>
-                        <tr>
-                            <td className={styles.label}>Consumption</td>
-                            <td className={styles.value}>{camper.consumption}</td>
-                        </tr>
-                    </tbody>
-                </table>
-            </div>
-        </div>
+            <Box sx={{ display: 'flex', flexDirection: 'column' }}>
+                <Typography variant="h3" sx={{ fontSize: '20px', fontWeight: 600, color: 'text.primary', mb: '12px' }}>
+                    Vehicle details
+                </Typography>
+                <Divider sx={{ mb: '24px' }} />
+                <Table sx={{ width: '100%', borderCollapse: 'collapse' }}>
+                    <TableBody>
+                        {[
+                            { label: 'Form', value: formLabels[camper.form] || camper.form },
+                            { label: 'Length', value: camper.length },
+                            { label: 'Width', value: camper.width },
+                            { label: 'Height', value: camper.height },
+                            { label: 'Tank', value: camper.tank },
+                            { label: 'Consumption', value: camper.consumption },
+                        ].map((row, index) => (
+                            <TableRow key={index} sx={{ borderBottom: index !== 5 ? '1px solid #f2f4f7' : 'none' }}>
+                                <TableCell sx={{ p: '8px 0', border: 'none', fontSize: '16px', color: 'text.primary', fontWeight: 400 }}>
+                                    {row.label}
+                                </TableCell>
+                                <TableCell sx={{ p: '8px 0', border: 'none', fontSize: '16px', color: 'text.primary', fontWeight: 500, textAlign: 'right' }}>
+                                    {row.value}
+                                </TableCell>
+                            </TableRow>
+                        ))}
+                    </TableBody>
+                </Table>
+            </Box>
+        </Box>
     );
 };
 

@@ -6,7 +6,7 @@ import CamperFeatures from './CamperFeatures';
 import CamperReviews from './CamperReviews';
 import BookingForm from './BookingForm';
 import Loader from '../../components/Loader/Loader';
-import styles from './CamperDetailPage.module.css';
+import { Box, Typography, Container, Tabs, Tab, Divider } from '@mui/material';
 
 const CamperDetailPage: React.FC = () => {
     const { id } = useParams<{ id: string }>();
@@ -25,28 +25,30 @@ const CamperDetailPage: React.FC = () => {
         };
     }, [dispatch, id]);
 
-    const handleSetActiveTab = useCallback(
-        (tab: 'features' | 'reviews') => {
-            setActiveTab(tab);
+    const handleTabChange = useCallback(
+        (_: React.SyntheticEvent, newValue: 'features' | 'reviews') => {
+            setActiveTab(newValue);
         },
         []
     );
 
     if (selectedCamperLoading) {
         return (
-            <section className={styles.page}>
+            <Box component="section" sx={{ pt: '88px', minHeight: '100vh', bgcolor: 'background.default' }}>
                 <Loader />
-            </section>
+            </Box>
         );
     }
 
     if (selectedCamperError) {
         return (
-            <section className={styles.page}>
-                <div className={styles.container}>
-                    <p className={styles.error}>{selectedCamperError}</p>
-                </div>
-            </section>
+            <Box component="section" sx={{ pt: '88px', minHeight: '100vh', bgcolor: 'background.default' }}>
+                <Container maxWidth={false} sx={{ maxWidth: 1440, px: '64px !important', pb: '64px' }}>
+                    <Typography color="error" align="center" sx={{ p: 6, fontSize: '16px' }}>
+                        {selectedCamperError}
+                    </Typography>
+                </Container>
+            </Box>
         );
     }
 
@@ -57,81 +59,116 @@ const CamperDetailPage: React.FC = () => {
     const camper = selectedCamper;
 
     return (
-        <section className={styles.page}>
-            <div className={styles.container}>
+        <Box component="section" sx={{ pt: '88px', minHeight: '100vh', bgcolor: 'background.default' }}>
+            <Container maxWidth={false} sx={{ maxWidth: 1440, px: '64px !important', pb: '64px' }}>
                 {/* Header */}
-                <div className={styles.header}>
-                    <h1 className={styles.name}>{camper.name}</h1>
-                    <div className={styles.meta}>
-                        <span className={styles.rating}>
+                <Box sx={{ mb: '28px', pt: '24px' }}>
+                    <Typography variant="h1" sx={{ fontSize: '24px', fontWeight: 600, color: 'text.primary', mb: '8px' }}>
+                        {camper.name}
+                    </Typography>
+                    <Box sx={{ display: 'flex', alignItems: 'center', gap: '16px', mb: '8px' }}>
+                        <Box sx={{ display: 'flex', alignItems: 'center', gap: '4px', fontSize: '14px', color: 'text.primary', textDecoration: 'underline', cursor: 'pointer' }}>
                             <svg width="16" height="16" viewBox="0 0 16 16" fill="#FFC531">
                                 <path d="M8 0l2.47 4.93L16 5.76l-4 3.82L12.94 16 8 13.27 3.06 16 4 9.58 0 5.76l5.53-.83L8 0z" />
                             </svg>
                             {camper.rating}({camper.reviews.length} Reviews)
-                        </span>
-                        <span className={styles.location}>
+                        </Box>
+                        <Box sx={{ display: 'flex', alignItems: 'center', gap: '4px', fontSize: '14px', color: 'text.primary' }}>
                             <svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="#101828" strokeWidth="1.2">
                                 <path d="M8 8.66667C9.10457 8.66667 10 7.77124 10 6.66667C10 5.5621 9.10457 4.66667 8 4.66667C6.89543 4.66667 6 5.5621 6 6.66667C6 7.77124 6.89543 8.66667 8 8.66667Z" strokeLinecap="round" strokeLinejoin="round" />
                                 <path d="M8 14.6667C10.6667 12 13.3333 9.61217 13.3333 6.66667C13.3333 3.72115 10.9455 1.33333 8 1.33333C5.05448 1.33333 2.66667 3.72115 2.66667 6.66667C2.66667 9.61217 5.33333 12 8 14.6667Z" strokeLinecap="round" strokeLinejoin="round" />
                             </svg>
                             {camper.location}
-                        </span>
-                    </div>
-                    <p className={styles.price}>€{camper.price.toFixed(2)}</p>
-                </div>
+                        </Box>
+                    </Box>
+                    <Typography sx={{ fontSize: '24px', fontWeight: 600, color: 'text.primary', m: 0 }}>
+                        €{camper.price.toFixed(2)}
+                    </Typography>
+                </Box>
 
                 {/* Gallery */}
-                <div className={styles.gallery}>
+                <Box sx={{ display: 'flex', gap: '16px', mb: '28px', overflowX: 'auto' }}>
                     {camper.gallery.map((img, index) => (
-                        <div key={index} className={styles.galleryItem}>
+                        <Box key={index} sx={{ flexShrink: 0, width: 292, height: 312, borderRadius: '10px', overflow: 'hidden' }}>
                             <img
                                 src={img.original}
                                 alt={`${camper.name} - ${index + 1}`}
-                                className={styles.galleryImage}
                                 loading="lazy"
+                                style={{ width: '100%', height: '100%', objectFit: 'cover' }}
                             />
-                        </div>
+                        </Box>
                     ))}
-                </div>
+                </Box>
 
                 {/* Description */}
-                <p className={styles.description}>{camper.description}</p>
+                <Typography sx={{ fontSize: '16px', color: 'text.secondary', lineHeight: 1.5, mb: '28px' }}>
+                    {camper.description}
+                </Typography>
 
                 {/* Tabs + Content */}
-                <div className={styles.tabsSection}>
-                    <div className={styles.tabs}>
-                        <button
-                            type="button"
-                            className={`${styles.tab} ${activeTab === 'features' ? styles.tabActive : ''}`}
-                            onClick={() => handleSetActiveTab('features')}
-                        >
-                            Features
-                        </button>
-                        <button
-                            type="button"
-                            className={`${styles.tab} ${activeTab === 'reviews' ? styles.tabActive : ''}`}
-                            onClick={() => handleSetActiveTab('reviews')}
-                        >
-                            Reviews
-                        </button>
-                    </div>
-                    <div className={styles.tabDivider} />
+                <Box sx={{ display: 'flex', flexDirection: 'column' }}>
+                    <Tabs
+                        value={activeTab}
+                        onChange={handleTabChange}
+                        sx={{
+                            '& .MuiTabs-indicator': {
+                                height: 4,
+                                borderRadius: '2px',
+                                backgroundColor: 'primary.main',
+                            },
+                        }}
+                    >
+                        <Tab
+                            value="features"
+                            label="Features"
+                            disableRipple
+                            sx={{
+                                fontSize: '20px',
+                                fontWeight: 600,
+                                textTransform: 'none',
+                                p: '12px 0',
+                                mr: '40px',
+                                minWidth: 0,
+                                color: 'text.primary',
+                                '&.Mui-selected': {
+                                    color: 'text.primary',
+                                },
+                            }}
+                        />
+                        <Tab
+                            value="reviews"
+                            label="Reviews"
+                            disableRipple
+                            sx={{
+                                fontSize: '20px',
+                                fontWeight: 600,
+                                textTransform: 'none',
+                                p: '12px 0',
+                                minWidth: 0,
+                                color: 'text.primary',
+                                '&.Mui-selected': {
+                                    color: 'text.primary',
+                                },
+                            }}
+                        />
+                    </Tabs>
+                    <Divider sx={{ mb: '44px', mt: '4px' }} />
 
-                    <div className={styles.contentLayout}>
-                        <div className={styles.tabContent}>
+                    <Box sx={{ display: 'flex', gap: '40px' }}>
+                        <Box sx={{ flex: 1, minWidth: 0 }}>
                             {activeTab === 'features' ? (
                                 <CamperFeatures camper={camper} />
                             ) : (
                                 <CamperReviews reviews={camper.reviews} />
                             )}
-                        </div>
-                        <div className={styles.bookingSidebar}>
+                        </Box>
+                        <Box sx={{ width: 420, flexShrink: 0 }}>
                             <BookingForm />
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </section>
+                        </Box>
+                    </Box>
+                </Box>
+            </Container>
+        </Box>
     );
 };
 

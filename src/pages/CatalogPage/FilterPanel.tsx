@@ -1,6 +1,6 @@
 import { useState, useCallback } from 'react';
 import type { CatalogFilters } from '../../lib/type/catalog';
-import styles from './FilterPanel.module.css';
+import { Box, Typography, TextField, InputAdornment, Button, Divider } from '@mui/material';
 
 interface FilterPanelProps {
     filters: CatalogFilters;
@@ -35,136 +35,191 @@ const FilterPanel: React.FC<FilterPanelProps> = ({ filters: initialFilters, onSe
         onSearch(localFilters);
     }, [localFilters, onSearch]);
 
+    const ToggleButtonCustom = ({ active, onClick, icon, label }: { active: boolean, onClick: () => void, icon: React.ReactNode, label: string }) => (
+        <Box
+            onClick={onClick}
+            sx={{
+                display: 'flex',
+                flexDirection: 'column',
+                alignItems: 'center',
+                justifyContent: 'center',
+                gap: '8px',
+                width: 106,
+                height: 96,
+                border: '1px solid',
+                borderColor: active ? 'primary.main' : 'divider',
+                borderRadius: '12px',
+                bgcolor: active ? '#fff0f0' : 'background.paper',
+                cursor: 'pointer',
+                fontSize: '14px',
+                fontWeight: 500,
+                color: 'text.primary',
+                transition: 'border-color 0.2s, background 0.2s',
+                '&:hover': {
+                    borderColor: 'primary.main',
+                },
+            }}
+        >
+            {icon}
+            <span>{label}</span>
+        </Box>
+    );
+
     return (
-        <aside className={styles.sidebar}>
-            <div className={styles.section}>
-                <label className={styles.locationLabel}>Location</label>
-                <div className={styles.locationInput}>
-                    <svg className={styles.mapIcon} width="20" height="20" viewBox="0 0 20 20" fill="none">
-                        <path d="M10 10.8333C11.3807 10.8333 12.5 9.71404 12.5 8.33333C12.5 6.95262 11.3807 5.83333 10 5.83333C8.61929 5.83333 7.5 6.95262 7.5 8.33333C7.5 9.71404 8.61929 10.8333 10 10.8333Z" stroke="#6C717B" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
-                        <path d="M10 18.3333C13.3333 15 16.6667 12.0152 16.6667 8.33333C16.6667 4.65143 13.6819 1.66667 10 1.66667C6.31811 1.66667 3.33334 4.65143 3.33334 8.33333C3.33334 12.0152 6.66667 15 10 18.3333Z" stroke="#6C717B" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
-                    </svg>
-                    <input
-                        type="text"
-                        placeholder="City"
-                        value={localFilters.location}
-                        onChange={handleLocationChange}
-                        className={styles.input}
-                    />
-                </div>
-            </div>
+        <Box component="aside" sx={{ width: { xs: '100%', md: 360 }, flexShrink: 0, display: 'flex', flexDirection: 'column', gap: '32px' }}>
+            {/* Location Section */}
+            <Box sx={{ display: 'flex', flexDirection: 'column' }}>
+                <Typography sx={{ fontSize: '16px', color: 'text.disabled', mb: '8px', fontWeight: 400 }}>
+                    Location
+                </Typography>
+                <TextField
+                    placeholder="City"
+                    value={localFilters.location}
+                    onChange={handleLocationChange}
+                    variant="outlined"
+                    fullWidth
+                    InputProps={{
+                        startAdornment: (
+                            <InputAdornment position="start" sx={{ pl: 1 }}>
+                                <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
+                                    <path d="M10 10.8333C11.3807 10.8333 12.5 9.71404 12.5 8.33333C12.5 6.95262 11.3807 5.83333 10 5.83333C8.61929 5.83333 7.5 6.95262 7.5 8.33333C7.5 9.71404 8.61929 10.8333 10 10.8333Z" stroke="#6C717B" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+                                    <path d="M10 18.3333C13.3333 15 16.6667 12.0152 16.6667 8.33333C16.6667 4.65143 13.6819 1.66667 10 1.66667C6.31811 1.66667 3.33334 4.65143 3.33334 8.33333C3.33334 12.0152 6.66667 15 10 18.3333Z" stroke="#6C717B" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+                                </svg>
+                            </InputAdornment>
+                        ),
+                    }}
+                    sx={{
+                        '& .MuiOutlinedInput-input': {
+                            pl: 1, // To balance left padding next to icon
+                        }
+                    }}
+                />
+            </Box>
 
-            <div className={styles.section}>
-                <p className={styles.sectionLabel}>Filters</p>
-                <h3 className={styles.sectionTitle}>Vehicle equipment</h3>
-                <div className={styles.divider} />
-                <div className={styles.toggleGrid}>
-                    <button
-                        type="button"
-                        className={`${styles.toggleBtn} ${localFilters.AC ? styles.active : ''}`}
+            {/* Equipment Section */}
+            <Box sx={{ display: 'flex', flexDirection: 'column' }}>
+                <Typography sx={{ fontSize: '16px', color: 'text.disabled', mb: '8px', fontWeight: 400 }}>
+                    Filters
+                </Typography>
+                <Typography variant="h3" sx={{ fontSize: '20px', fontWeight: 600, color: 'text.primary', mb: '12px' }}>
+                    Vehicle equipment
+                </Typography>
+                <Divider sx={{ mb: '24px' }} />
+                <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: '12px' }}>
+                    <ToggleButtonCustom
+                        active={localFilters.AC}
                         onClick={() => handleEquipmentToggle('AC')}
-                    >
-                        <svg width="32" height="32" viewBox="0 0 32 32" fill="none">
-                            <path d="M16 6V26M16 6L20 10M16 6L12 10M16 26L20 22M16 26L12 22M6 16H26M6 16L10 12M6 16L10 20M26 16L22 12M26 16L22 20" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
-                        </svg>
-                        <span>AC</span>
-                    </button>
-                    <button
-                        type="button"
-                        className={`${styles.toggleBtn} ${localFilters.transmission ? styles.active : ''}`}
+                        icon={
+                            <svg width="32" height="32" viewBox="0 0 32 32" fill="none">
+                                <path d="M16 6V26M16 6L20 10M16 6L12 10M16 26L20 22M16 26L12 22M6 16H26M6 16L10 12M6 16L10 20M26 16L22 12M26 16L22 20" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+                            </svg>
+                        }
+                        label="AC"
+                    />
+                    <ToggleButtonCustom
+                        active={localFilters.transmission}
                         onClick={() => handleEquipmentToggle('transmission')}
-                    >
-                        <svg width="32" height="32" viewBox="0 0 32 32" fill="none">
-                            <circle cx="8" cy="24" r="3" stroke="currentColor" strokeWidth="1.5" />
-                            <circle cx="16" cy="24" r="3" stroke="currentColor" strokeWidth="1.5" />
-                            <circle cx="24" cy="24" r="3" stroke="currentColor" strokeWidth="1.5" />
-                            <path d="M8 21V10M16 21V8M24 21V10M8 10H24" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" />
-                        </svg>
-                        <span>Automatic</span>
-                    </button>
-                    <button
-                        type="button"
-                        className={`${styles.toggleBtn} ${localFilters.kitchen ? styles.active : ''}`}
+                        icon={
+                            <svg width="32" height="32" viewBox="0 0 32 32" fill="none">
+                                <circle cx="8" cy="24" r="3" stroke="currentColor" strokeWidth="1.5" />
+                                <circle cx="16" cy="24" r="3" stroke="currentColor" strokeWidth="1.5" />
+                                <circle cx="24" cy="24" r="3" stroke="currentColor" strokeWidth="1.5" />
+                                <path d="M8 21V10M16 21V8M24 21V10M8 10H24" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" />
+                            </svg>
+                        }
+                        label="Automatic"
+                    />
+                    <ToggleButtonCustom
+                        active={localFilters.kitchen}
                         onClick={() => handleEquipmentToggle('kitchen')}
-                    >
-                        <svg width="32" height="32" viewBox="0 0 32 32" fill="none">
-                            <path d="M12 6V14C12 15.1046 12.8954 16 14 16H18C19.1046 16 20 15.1046 20 14V6M16 16V26M12 26H20" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
-                        </svg>
-                        <span>Kitchen</span>
-                    </button>
-                    <button
-                        type="button"
-                        className={`${styles.toggleBtn} ${localFilters.TV ? styles.active : ''}`}
+                        icon={
+                            <svg width="32" height="32" viewBox="0 0 32 32" fill="none">
+                                <path d="M12 6V14C12 15.1046 12.8954 16 14 16H18C19.1046 16 20 15.1046 20 14V6M16 16V26M12 26H20" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+                            </svg>
+                        }
+                        label="Kitchen"
+                    />
+                    <ToggleButtonCustom
+                        active={localFilters.TV}
                         onClick={() => handleEquipmentToggle('TV')}
-                    >
-                        <svg width="32" height="32" viewBox="0 0 32 32" fill="none">
-                            <rect x="4" y="8" width="24" height="16" rx="2" stroke="currentColor" strokeWidth="1.5" />
-                            <path d="M12 28H20" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" />
-                        </svg>
-                        <span>TV</span>
-                    </button>
-                    <button
-                        type="button"
-                        className={`${styles.toggleBtn} ${localFilters.bathroom ? styles.active : ''}`}
+                        icon={
+                            <svg width="32" height="32" viewBox="0 0 32 32" fill="none">
+                                <rect x="4" y="8" width="24" height="16" rx="2" stroke="currentColor" strokeWidth="1.5" />
+                                <path d="M12 28H20" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" />
+                            </svg>
+                        }
+                        label="TV"
+                    />
+                    <ToggleButtonCustom
+                        active={localFilters.bathroom}
                         onClick={() => handleEquipmentToggle('bathroom')}
-                    >
-                        <svg width="32" height="32" viewBox="0 0 32 32" fill="none">
-                            <path d="M6 16H26M8 16V22C8 24.2091 9.79086 26 12 26H20C22.2091 26 24 24.2091 24 22V16M10 6V16M10 6C10 6 10 4 12 4" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
-                        </svg>
-                        <span>Bathroom</span>
-                    </button>
-                </div>
-            </div>
+                        icon={
+                            <svg width="32" height="32" viewBox="0 0 32 32" fill="none">
+                                <path d="M6 16H26M8 16V22C8 24.2091 9.79086 26 12 26H20C22.2091 26 24 24.2091 24 22V16M10 6V16M10 6C10 6 10 4 12 4" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+                            </svg>
+                        }
+                        label="Bathroom"
+                    />
+                </Box>
+            </Box>
 
-            <div className={styles.section}>
-                <h3 className={styles.sectionTitle}>Vehicle type</h3>
-                <div className={styles.divider} />
-                <div className={styles.toggleGrid}>
-                    <button
-                        type="button"
-                        className={`${styles.toggleBtn} ${localFilters.form === 'panelTruck' ? styles.active : ''}`}
+            {/* Vehicle Type Section */}
+            <Box sx={{ display: 'flex', flexDirection: 'column' }}>
+                <Typography variant="h3" sx={{ fontSize: '20px', fontWeight: 600, color: 'text.primary', mb: '12px' }}>
+                    Vehicle type
+                </Typography>
+                <Divider sx={{ mb: '24px' }} />
+                <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: '12px' }}>
+                    <ToggleButtonCustom
+                        active={localFilters.form === 'panelTruck'}
                         onClick={() => handleFormChange('panelTruck')}
-                    >
-                        <svg width="32" height="32" viewBox="0 0 32 32" fill="none">
-                            <rect x="4" y="10" width="10" height="12" rx="1" stroke="currentColor" strokeWidth="1.5" />
-                            <rect x="18" y="10" width="10" height="12" rx="1" stroke="currentColor" strokeWidth="1.5" />
-                        </svg>
-                        <span>Van</span>
-                    </button>
-                    <button
-                        type="button"
-                        className={`${styles.toggleBtn} ${localFilters.form === 'fullyIntegrated' ? styles.active : ''}`}
+                        icon={
+                            <svg width="32" height="32" viewBox="0 0 32 32" fill="none">
+                                <rect x="4" y="10" width="10" height="12" rx="1" stroke="currentColor" strokeWidth="1.5" />
+                                <rect x="18" y="10" width="10" height="12" rx="1" stroke="currentColor" strokeWidth="1.5" />
+                            </svg>
+                        }
+                        label="Van"
+                    />
+                    <ToggleButtonCustom
+                        active={localFilters.form === 'fullyIntegrated'}
                         onClick={() => handleFormChange('fullyIntegrated')}
-                    >
-                        <svg width="32" height="32" viewBox="0 0 32 32" fill="none">
-                            <rect x="4" y="8" width="6" height="6" rx="1" stroke="currentColor" strokeWidth="1.5" />
-                            <rect x="13" y="8" width="6" height="6" rx="1" stroke="currentColor" strokeWidth="1.5" />
-                            <rect x="22" y="8" width="6" height="6" rx="1" stroke="currentColor" strokeWidth="1.5" />
-                            <rect x="4" y="18" width="6" height="6" rx="1" stroke="currentColor" strokeWidth="1.5" />
-                            <rect x="13" y="18" width="6" height="6" rx="1" stroke="currentColor" strokeWidth="1.5" />
-                            <rect x="22" y="18" width="6" height="6" rx="1" stroke="currentColor" strokeWidth="1.5" />
-                        </svg>
-                        <span>Fully Integrated</span>
-                    </button>
-                    <button
-                        type="button"
-                        className={`${styles.toggleBtn} ${localFilters.form === 'alcove' ? styles.active : ''}`}
+                        icon={
+                            <svg width="32" height="32" viewBox="0 0 32 32" fill="none">
+                                <rect x="4" y="8" width="6" height="6" rx="1" stroke="currentColor" strokeWidth="1.5" />
+                                <rect x="13" y="8" width="6" height="6" rx="1" stroke="currentColor" strokeWidth="1.5" />
+                                <rect x="22" y="8" width="6" height="6" rx="1" stroke="currentColor" strokeWidth="1.5" />
+                                <rect x="4" y="18" width="6" height="6" rx="1" stroke="currentColor" strokeWidth="1.5" />
+                                <rect x="13" y="18" width="6" height="6" rx="1" stroke="currentColor" strokeWidth="1.5" />
+                                <rect x="22" y="18" width="6" height="6" rx="1" stroke="currentColor" strokeWidth="1.5" />
+                            </svg>
+                        }
+                        label="Fully Integrated"
+                    />
+                    <ToggleButtonCustom
+                        active={localFilters.form === 'alcove'}
                         onClick={() => handleFormChange('alcove')}
-                    >
-                        <svg width="32" height="32" viewBox="0 0 32 32" fill="none">
-                            <rect x="4" y="8" width="24" height="6" rx="1" stroke="currentColor" strokeWidth="1.5" />
-                            <rect x="4" y="18" width="24" height="6" rx="1" stroke="currentColor" strokeWidth="1.5" />
-                            <rect x="13" y="8" width="6" height="16" rx="0" stroke="currentColor" strokeWidth="1.5" />
-                        </svg>
-                        <span>Alcove</span>
-                    </button>
-                </div>
-            </div>
+                        icon={
+                            <svg width="32" height="32" viewBox="0 0 32 32" fill="none">
+                                <rect x="4" y="8" width="24" height="6" rx="1" stroke="currentColor" strokeWidth="1.5" />
+                                <rect x="4" y="18" width="24" height="6" rx="1" stroke="currentColor" strokeWidth="1.5" />
+                                <rect x="13" y="8" width="6" height="16" rx="0" stroke="currentColor" strokeWidth="1.5" />
+                            </svg>
+                        }
+                        label="Alcove"
+                    />
+                </Box>
+            </Box>
 
-            <button type="button" className={styles.searchBtn} onClick={handleSearch}>
+            <Button
+                variant="contained"
+                color="primary"
+                onClick={handleSearch}
+                sx={{ alignSelf: 'flex-start' }}
+            >
                 Search
-            </button>
-        </aside>
+            </Button>
+        </Box>
     );
 };
 
