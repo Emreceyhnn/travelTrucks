@@ -24,13 +24,13 @@ A modern web application for browsing and booking camper rentals, built with Rea
 ## Getting Started
 
 ```bash
-# Install dependencies
+
 npm install
 
-# Start development server
+
 npm run dev
 
-# Build for production
+
 npm run build
 ```
 

@@ -72,7 +72,7 @@ const FilterPanel: React.FC<FilterPanelProps> = ({ filters: initialFilters, onSe
 
     return (
         <Box component="aside" sx={{ width: { xs: '100%', md: 360 }, flexShrink: 0, display: 'flex', flexDirection: 'column', gap: '32px' }}>
-            {/* Location Section */}
+
             <Box sx={{ display: 'flex', flexDirection: 'column' }}>
                 <Typography sx={{ fontSize: '16px', color: 'text.disabled', mb: '8px', fontWeight: 400 }}>
                     Location
@@ -95,13 +95,13 @@ const FilterPanel: React.FC<FilterPanelProps> = ({ filters: initialFilters, onSe
                     }}
                     sx={{
                         '& .MuiOutlinedInput-input': {
-                            pl: 1, // To balance left padding next to icon
+                            pl: 1,
                         }
                     }}
                 />
             </Box>
 
-            {/* Equipment Section */}
+
             <Box sx={{ display: 'flex', flexDirection: 'column' }}>
                 <Typography sx={{ fontSize: '16px', color: 'text.disabled', mb: '8px', fontWeight: 400 }}>
                     Filters
@@ -164,7 +164,7 @@ const FilterPanel: React.FC<FilterPanelProps> = ({ filters: initialFilters, onSe
                 </Box>
             </Box>
 
-            {/* Vehicle Type Section */}
+
             <Box sx={{ display: 'flex', flexDirection: 'column' }}>
                 <Typography variant="h3" sx={{ fontSize: '20px', fontWeight: 600, color: 'text.primary', mb: '12px' }}>
                     Vehicle type

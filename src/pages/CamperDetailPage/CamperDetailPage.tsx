@@ -61,7 +61,7 @@ const CamperDetailPage: React.FC = () => {
     return (
         <Box component="section" sx={{ pt: '88px', minHeight: '100vh', bgcolor: 'background.default' }}>
             <Container maxWidth={false} sx={{ maxWidth: 1700, px: '64px !important', pb: '64px' }}>
-                {/* Header */}
+
                 <Box sx={{ mb: '28px', pt: '24px' }}>
                     <Typography variant="h1" sx={{ fontSize: '24px', fontWeight: 600, color: 'text.primary', mb: '8px' }}>
                         {camper.name}
@@ -86,7 +86,7 @@ const CamperDetailPage: React.FC = () => {
                     </Typography>
                 </Box>
 
-                {/* Gallery */}
+
                 <Box sx={{ display: 'flex', gap: '16px', mb: '28px', overflowX: 'auto' }}>
                     {camper.gallery.map((img, index) => (
                         <Box key={index} sx={{ flexShrink: 0, width: 292, height: 312, borderRadius: '10px', overflow: 'hidden' }}>
@@ -100,12 +100,11 @@ const CamperDetailPage: React.FC = () => {
                     ))}
                 </Box>
 
-                {/* Description */}
                 <Typography sx={{ fontSize: '16px', color: 'text.secondary', lineHeight: 1.5, mb: '28px' }}>
                     {camper.description}
                 </Typography>
 
-                {/* Tabs + Content */}
+
                 <Box sx={{ display: 'flex', flexDirection: 'column' }}>
                     <Tabs
                         value={activeTab}

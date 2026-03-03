@@ -19,8 +19,8 @@ const theme = createTheme({
         },
         divider: '#dadde1',
         grey: {
-            50: '#f7f7f7', // Inputs background
-            100: '#f2f4f7', // Badge background
+            50: '#f7f7f7',
+            100: '#f2f4f7',
         },
     },
     typography: {

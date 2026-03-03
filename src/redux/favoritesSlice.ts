@@ -11,7 +11,7 @@ const loadFavorites = (): string[] => {
             return JSON.parse(stored) as string[];
         }
     } catch {
-        /* ignore parse errors */
+
     }
     return [];
 };

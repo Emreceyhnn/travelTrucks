@@ -17,7 +17,7 @@ const Header: React.FC = () => {
                 justifyContent: 'center',
             }}
         >
-            {/* Same max-width + padding as all page containers → logo left-edge aligns with content */}
+
             <Box
                 sx={{
                     position: 'relative',
@@ -31,7 +31,7 @@ const Header: React.FC = () => {
                     boxSizing: 'border-box',
                 }}
             >
-                {/* Logo – pinned to the left */}
+
                 <Box
                     component={NavLink}
                     to="/"
@@ -52,7 +52,7 @@ const Header: React.FC = () => {
                     </svg>
                 </Box>
 
-                {/* Nav links – absolutely centered relative to the container */}
+
                 <Box
                     sx={{
                         position: 'absolute',
@@ -89,7 +89,7 @@ const Header: React.FC = () => {
                     ))}
                 </Box>
 
-                {/* Right spacer so logo stays truly left-aligned with space-between */}
+
                 <Box sx={{ width: '136px', flexShrink: 0 }} />
             </Box>
         </AppBar>
