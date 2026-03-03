@@ -44,6 +44,31 @@
     <meta property="twitter:image" content="/og-image.png" />
 
     <link rel="icon" type="image/png" href="/logo.png" />
+
+    <!-- Performance: Preload LCP Image -->
+    <link rel="preload" as="image" href="/bgImage.webp" fetchpriority="high" />
+
+    <!-- Performance: Preconnect to Font Services -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+
+    <!-- SEO: JSON-LD Structured Data -->
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "RentalBusiness",
+        "name": "TravelTrucks",
+        "description": "Premium camper vans and rugged expedition trucks for your next adventure.",
+        "url": "https://traveltrucks.com/",
+        "logo": "https://traveltrucks.com/logo.png",
+        "address": {
+          "@type": "PostalAddress",
+          "addressLocality": "Kyiv",
+          "addressCountry": "UA"
+        },
+        "priceRange": "$$"
+      }
+    </script>
   </head>
   <body>
     <div id="root"></div>

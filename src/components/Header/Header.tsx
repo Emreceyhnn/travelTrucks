@@ -35,6 +35,7 @@ const Header: React.FC = () => {
                 <Box
                     component={NavLink}
                     to="/"
+                    aria-label="TravelTrucks Home"
                     sx={{
                         textDecoration: 'none',
                         display: 'flex',
