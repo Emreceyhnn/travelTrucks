@@ -1,5 +1,6 @@
 import type { Camper } from '../../lib/type/camper';
 import { Box, Typography, Button, IconButton } from '@mui/material';
+import sprite from '../../assets/sprite.svg';
 
 interface CamperCardProps {
     camper: Camper;
@@ -16,23 +17,23 @@ const CamperCard: React.FC<CamperCardProps> = ({
     isFavorite,
     onToggleFavorite,
 }) => {
-    const features: { key: string; label: string; icon: string }[] = [];
+    const features: { key: string; label: string; icon: string; stroke?: boolean }[] = [];
 
-    if (camper.transmission === 'automatic') {
-        features.push({ key: 'transmission', label: 'Automatic', icon: 'transmission' });
+    if (camper.transmission) {
+        features.push({ key: 'transmission', label: camper.transmission.charAt(0).toUpperCase() + camper.transmission.slice(1), icon: 'icon-diagram' });
     }
-    if (camper.AC) features.push({ key: 'AC', label: 'AC', icon: 'ac' });
+    if (camper.AC) features.push({ key: 'AC', label: 'AC', icon: 'icon-wind' });
     if (camper.engine) {
-        features.push({ key: 'engine', label: camper.engine.charAt(0).toUpperCase() + camper.engine.slice(1), icon: 'engine' });
+        features.push({ key: 'engine', label: camper.engine.charAt(0).toUpperCase() + camper.engine.slice(1), icon: 'icon-fuel' });
     }
-    if (camper.kitchen) features.push({ key: 'kitchen', label: 'Kitchen', icon: 'kitchen' });
-    if (camper.TV) features.push({ key: 'TV', label: 'TV', icon: 'tv' });
-    if (camper.bathroom) features.push({ key: 'bathroom', label: 'Bathroom', icon: 'bathroom' });
-    if (camper.radio) features.push({ key: 'radio', label: 'Radio', icon: 'radio' });
-    if (camper.refrigerator) features.push({ key: 'refrigerator', label: 'Refrigerator', icon: 'refrigerator' });
-    if (camper.microwave) features.push({ key: 'microwave', label: 'Microwave', icon: 'microwave' });
-    if (camper.gas) features.push({ key: 'gas', label: 'Gas', icon: 'gas' });
-    if (camper.water) features.push({ key: 'water', label: 'Water', icon: 'water' });
+    if (camper.kitchen) features.push({ key: 'kitchen', label: 'Kitchen', icon: 'icon-cup-hot' });
+    if (camper.TV) features.push({ key: 'TV', label: 'TV', icon: 'icon-tv' });
+    if (camper.bathroom) features.push({ key: 'bathroom', label: 'Bathroom', icon: 'icon-ph_shower' });
+    if (camper.radio) features.push({ key: 'radio', label: 'Radio', icon: 'icon-radio' });
+    if (camper.refrigerator) features.push({ key: 'refrigerator', label: 'Refrigerator', icon: 'icon-solar_fridge-outline' });
+    if (camper.microwave) features.push({ key: 'microwave', label: 'Microwave', icon: 'icon-lucide_microwave', stroke: true });
+    if (camper.gas) features.push({ key: 'gas', label: 'Gas', icon: 'icon-hugeicons_gas-stove', stroke: true });
+    if (camper.water) features.push({ key: 'water', label: 'Water', icon: 'icon-ion_water-outline', stroke: true });
 
     const handleShowMore = () => {
         window.open(`/catalog/${camper.id}`, '_blank');
@@ -106,10 +107,19 @@ const CamperCard: React.FC<CamperCardProps> = ({
                         <Box
                             key={feature.key}
                             sx={{
-                                display: 'flex', alignItems: 'center', gap: '8px', py: '12px', px: '18px',
-                                bgcolor: 'grey.100', borderRadius: '200px', fontSize: '14px', fontWeight: 500, color: 'text.primary'
+                                display: 'flex', alignItems: 'center', gap: '8px', py: '15px', px: '21px',
+                                bgcolor: '#F2F4F7', borderRadius: '100px', fontSize: '16px', fontWeight: 500, color: '#101828',
+                                textTransform: 'capitalize'
                             }}
                         >
+                            <svg
+                                width="20"
+                                height="20"
+                                fill={feature.stroke ? 'none' : 'currentColor'}
+                                stroke={feature.stroke ? 'currentColor' : 'none'}
+                            >
+                                <use href={`${sprite}#${feature.icon}`} />
+                            </svg>
                             {feature.label}
                         </Box>
                     ))}

@@ -1,6 +1,7 @@
 import { useState, useCallback } from 'react';
 import type { CatalogFilters } from '../../lib/type/catalog';
 import { Box, Typography, TextField, InputAdornment, Button, Divider } from '@mui/material';
+import sprite from "../../assets/sprite.svg";
 
 interface FilterPanelProps {
     filters: CatalogFilters;
@@ -45,7 +46,9 @@ const FilterPanel: React.FC<FilterPanelProps> = ({ filters: initialFilters, onSe
                 justifyContent: 'center',
                 gap: '8px',
                 width: 106,
-                height: 96,
+                minHeight: 96,
+                height: 'auto',
+                py: 1,
                 border: '1px solid',
                 borderColor: active ? 'primary.main' : 'divider',
                 borderRadius: '12px',
@@ -61,7 +64,9 @@ const FilterPanel: React.FC<FilterPanelProps> = ({ filters: initialFilters, onSe
             }}
         >
             {icon}
-            <span>{label}</span>
+            <span style={{ textAlign: 'center', lineHeight: 1.2, whiteSpace: 'pre-wrap' }}>
+                {label}
+            </span>
         </Box>
     );
 
@@ -110,8 +115,8 @@ const FilterPanel: React.FC<FilterPanelProps> = ({ filters: initialFilters, onSe
                         active={localFilters.AC}
                         onClick={() => handleEquipmentToggle('AC')}
                         icon={
-                            <svg width="32" height="32" viewBox="0 0 32 32" fill="none">
-                                <path d="M16 6V26M16 6L20 10M16 6L12 10M16 26L20 22M16 26L12 22M6 16H26M6 16L10 12M6 16L10 20M26 16L22 12M26 16L22 20" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+                            <svg width="32" height="32" fill="currentColor">
+                                <use href={`${sprite}#icon-wind`} />
                             </svg>
                         }
                         label="AC"
@@ -120,11 +125,8 @@ const FilterPanel: React.FC<FilterPanelProps> = ({ filters: initialFilters, onSe
                         active={localFilters.transmission}
                         onClick={() => handleEquipmentToggle('transmission')}
                         icon={
-                            <svg width="32" height="32" viewBox="0 0 32 32" fill="none">
-                                <circle cx="8" cy="24" r="3" stroke="currentColor" strokeWidth="1.5" />
-                                <circle cx="16" cy="24" r="3" stroke="currentColor" strokeWidth="1.5" />
-                                <circle cx="24" cy="24" r="3" stroke="currentColor" strokeWidth="1.5" />
-                                <path d="M8 21V10M16 21V8M24 21V10M8 10H24" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" />
+                            <svg width="32" height="32" fill="currentColor">
+                                <use href={`${sprite}#icon-diagram`} />
                             </svg>
                         }
                         label="Automatic"
@@ -133,8 +135,8 @@ const FilterPanel: React.FC<FilterPanelProps> = ({ filters: initialFilters, onSe
                         active={localFilters.kitchen}
                         onClick={() => handleEquipmentToggle('kitchen')}
                         icon={
-                            <svg width="32" height="32" viewBox="0 0 32 32" fill="none">
-                                <path d="M12 6V14C12 15.1046 12.8954 16 14 16H18C19.1046 16 20 15.1046 20 14V6M16 16V26M12 26H20" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+                            <svg width="32" height="32" fill="currentColor">
+                                <use href={`${sprite}#icon-cup-hot`} />
                             </svg>
                         }
                         label="Kitchen"
@@ -143,9 +145,8 @@ const FilterPanel: React.FC<FilterPanelProps> = ({ filters: initialFilters, onSe
                         active={localFilters.TV}
                         onClick={() => handleEquipmentToggle('TV')}
                         icon={
-                            <svg width="32" height="32" viewBox="0 0 32 32" fill="none">
-                                <rect x="4" y="8" width="24" height="16" rx="2" stroke="currentColor" strokeWidth="1.5" />
-                                <path d="M12 28H20" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" />
+                            <svg width="32" height="32" fill="currentColor">
+                                <use href={`${sprite}#icon-tv`} />
                             </svg>
                         }
                         label="TV"
@@ -154,8 +155,8 @@ const FilterPanel: React.FC<FilterPanelProps> = ({ filters: initialFilters, onSe
                         active={localFilters.bathroom}
                         onClick={() => handleEquipmentToggle('bathroom')}
                         icon={
-                            <svg width="32" height="32" viewBox="0 0 32 32" fill="none">
-                                <path d="M6 16H26M8 16V22C8 24.2091 9.79086 26 12 26H20C22.2091 26 24 24.2091 24 22V16M10 6V16M10 6C10 6 10 4 12 4" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+                            <svg width="32" height="32" fill="currentColor">
+                                <use href={`${sprite}#icon-ph_shower`} />
                             </svg>
                         }
                         label="Bathroom"
@@ -174,9 +175,8 @@ const FilterPanel: React.FC<FilterPanelProps> = ({ filters: initialFilters, onSe
                         active={localFilters.form === 'panelTruck'}
                         onClick={() => handleFormChange('panelTruck')}
                         icon={
-                            <svg width="32" height="32" viewBox="0 0 32 32" fill="none">
-                                <rect x="4" y="10" width="10" height="12" rx="1" stroke="currentColor" strokeWidth="1.5" />
-                                <rect x="18" y="10" width="10" height="12" rx="1" stroke="currentColor" strokeWidth="1.5" />
+                            <svg width="32" height="32" fill="currentColor">
+                                <use href={`${sprite}#icon-bi_grid-1x2`} />
                             </svg>
                         }
                         label="Van"
@@ -185,25 +185,18 @@ const FilterPanel: React.FC<FilterPanelProps> = ({ filters: initialFilters, onSe
                         active={localFilters.form === 'fullyIntegrated'}
                         onClick={() => handleFormChange('fullyIntegrated')}
                         icon={
-                            <svg width="32" height="32" viewBox="0 0 32 32" fill="none">
-                                <rect x="4" y="8" width="6" height="6" rx="1" stroke="currentColor" strokeWidth="1.5" />
-                                <rect x="13" y="8" width="6" height="6" rx="1" stroke="currentColor" strokeWidth="1.5" />
-                                <rect x="22" y="8" width="6" height="6" rx="1" stroke="currentColor" strokeWidth="1.5" />
-                                <rect x="4" y="18" width="6" height="6" rx="1" stroke="currentColor" strokeWidth="1.5" />
-                                <rect x="13" y="18" width="6" height="6" rx="1" stroke="currentColor" strokeWidth="1.5" />
-                                <rect x="22" y="18" width="6" height="6" rx="1" stroke="currentColor" strokeWidth="1.5" />
+                            <svg width="32" height="32" fill="currentColor">
+                                <use href={`${sprite}#icon-bi_grid`} />
                             </svg>
                         }
-                        label="Fully Integrated"
+                        label={"Fully\nIntegrated"}
                     />
                     <ToggleButtonCustom
                         active={localFilters.form === 'alcove'}
                         onClick={() => handleFormChange('alcove')}
                         icon={
-                            <svg width="32" height="32" viewBox="0 0 32 32" fill="none">
-                                <rect x="4" y="8" width="24" height="6" rx="1" stroke="currentColor" strokeWidth="1.5" />
-                                <rect x="4" y="18" width="24" height="6" rx="1" stroke="currentColor" strokeWidth="1.5" />
-                                <rect x="13" y="8" width="6" height="16" rx="0" stroke="currentColor" strokeWidth="1.5" />
+                            <svg width="32" height="32" fill="currentColor">
+                                <use href={`${sprite}#icon-bi_grid-3x3-gap`} />
                             </svg>
                         }
                         label="Alcove"

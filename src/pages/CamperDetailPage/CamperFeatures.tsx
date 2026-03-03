@@ -1,23 +1,23 @@
 import type { Camper } from '../../lib/type/camper';
 import { Box, Typography, Divider, Table, TableBody, TableRow, TableCell } from '@mui/material';
-
+import sprite from '../../assets/sprite.svg';
 interface CamperFeaturesProps {
     camper: Camper;
 }
 
 const CamperFeatures: React.FC<CamperFeaturesProps> = ({ camper }) => {
-    const equipmentItems: { label: string; available: boolean }[] = [
-        { label: camper.transmission === 'automatic' ? 'Automatic' : 'Manual', available: true },
-        { label: 'AC', available: camper.AC },
-        { label: camper.engine.charAt(0).toUpperCase() + camper.engine.slice(1), available: true },
-        { label: 'Kitchen', available: camper.kitchen },
-        { label: 'TV', available: camper.TV },
-        { label: 'Bathroom', available: camper.bathroom },
-        { label: 'Radio', available: camper.radio },
-        { label: 'Refrigerator', available: camper.refrigerator },
-        { label: 'Microwave', available: camper.microwave },
-        { label: 'Gas', available: camper.gas },
-        { label: 'Water', available: camper.water },
+    const equipmentItems: { label: string; available: boolean; icon: string; stroke?: boolean }[] = [
+        { label: camper.transmission === 'automatic' ? 'Automatic' : 'Manual', available: true, icon: 'icon-diagram' },
+        { label: 'AC', available: camper.AC, icon: 'icon-wind' },
+        { label: camper.engine.charAt(0).toUpperCase() + camper.engine.slice(1), available: true, icon: 'icon-fuel' },
+        { label: 'Kitchen', available: camper.kitchen, icon: 'icon-cup-hot' },
+        { label: 'TV', available: camper.TV, icon: 'icon-tv' },
+        { label: 'Bathroom', available: camper.bathroom, icon: 'icon-ph_shower' },
+        { label: 'Radio', available: camper.radio, icon: 'icon-radio' },
+        { label: 'Refrigerator', available: camper.refrigerator, icon: 'icon-solar_fridge-outline' },
+        { label: 'Microwave', available: camper.microwave, icon: 'icon-lucide_microwave', stroke: true },
+        { label: 'Gas', available: camper.gas, icon: 'icon-hugeicons_gas-stove', stroke: true },
+        { label: 'Water', available: camper.water, icon: 'icon-ion_water-outline', stroke: true },
     ];
 
     const activeEquipment = equipmentItems.filter((item) => item.available);
@@ -35,10 +35,19 @@ const CamperFeatures: React.FC<CamperFeaturesProps> = ({ camper }) => {
                     <Box
                         key={item.label}
                         sx={{
-                            display: 'flex', alignItems: 'center', gap: '8px', py: '12px', px: '18px',
-                            bgcolor: 'grey.100', borderRadius: '200px', fontSize: '14px', fontWeight: 500, color: 'text.primary'
+                            display: 'flex', alignItems: 'center', gap: '8px', py: '15px', px: '21px',
+                            bgcolor: '#F2F4F7', borderRadius: '100px', fontSize: '16px', fontWeight: 500, color: '#101828',
+                            textTransform: 'capitalize'
                         }}
                     >
+                        <svg
+                            width="20"
+                            height="20"
+                            fill={item.stroke ? 'none' : 'currentColor'}
+                            stroke={item.stroke ? 'currentColor' : 'none'}
+                        >
+                            <use href={`${sprite}#${item.icon}`} />
+                        </svg>
                         {item.label}
                     </Box>
                 ))}

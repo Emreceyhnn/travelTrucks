@@ -43,7 +43,7 @@ const CamperDetailPage: React.FC = () => {
     if (selectedCamperError) {
         return (
             <Box component="section" sx={{ pt: '88px', minHeight: '100vh', bgcolor: 'background.default' }}>
-                <Container maxWidth={false} sx={{ maxWidth: 1440, px: '64px !important', pb: '64px' }}>
+                <Container maxWidth={false} sx={{ maxWidth: 1700, px: '64px !important', pb: '64px' }}>
                     <Typography color="error" align="center" sx={{ p: 6, fontSize: '16px' }}>
                         {selectedCamperError}
                     </Typography>
@@ -60,7 +60,7 @@ const CamperDetailPage: React.FC = () => {
 
     return (
         <Box component="section" sx={{ pt: '88px', minHeight: '100vh', bgcolor: 'background.default' }}>
-            <Container maxWidth={false} sx={{ maxWidth: 1440, px: '64px !important', pb: '64px' }}>
+            <Container maxWidth={false} sx={{ maxWidth: 1700, px: '64px !important', pb: '64px' }}>
                 {/* Header */}
                 <Box sx={{ mb: '28px', pt: '24px' }}>
                     <Typography variant="h1" sx={{ fontSize: '24px', fontWeight: 600, color: 'text.primary', mb: '8px' }}>
@@ -112,6 +112,7 @@ const CamperDetailPage: React.FC = () => {
                         onChange={handleTabChange}
                         sx={{
                             '& .MuiTabs-indicator': {
+                                mt: 2,
                                 height: 4,
                                 borderRadius: '2px',
                                 backgroundColor: 'primary.main',
@@ -152,17 +153,23 @@ const CamperDetailPage: React.FC = () => {
                             }}
                         />
                     </Tabs>
-                    <Divider sx={{ mb: '44px', mt: '4px' }} />
+                    <Divider sx={{ mb: '44px' }} />
 
-                    <Box sx={{ display: 'flex', gap: '40px' }}>
-                        <Box sx={{ flex: 1, minWidth: 0 }}>
+                    <Box sx={{ display: 'flex', gap: '24px' }}>
+                        <Box sx={{
+                            flex: '0 0 50%',
+                            minWidth: 0,
+                            bgcolor: '#F7F7F7',
+                            borderRadius: '16px',
+                            p: '24px',
+                        }}>
                             {activeTab === 'features' ? (
                                 <CamperFeatures camper={camper} />
                             ) : (
                                 <CamperReviews reviews={camper.reviews} />
                             )}
                         </Box>
-                        <Box sx={{ width: 420, flexShrink: 0 }}>
+                        <Box sx={{ flex: '0 0 calc(50% - 24px)', minWidth: 0 }}>
                             <BookingForm />
                         </Box>
                     </Box>

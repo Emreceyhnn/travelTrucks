@@ -48,8 +48,8 @@ const CatalogPage: React.FC = () => {
             <Container
                 maxWidth={false}
                 sx={{
-                    maxWidth: 1440,
-                    px: { xs: '24px', md: '64px' },
+                    maxWidth: '1700px',
+                    px: { xs: '20px', md: '80px' },
                     pb: '64px',
                     display: 'flex',
                     flexDirection: { xs: 'column', md: 'row' },

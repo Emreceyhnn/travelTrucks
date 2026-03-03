@@ -59,27 +59,38 @@ const BookingForm: React.FC = () => {
                     type="text"
                     name="name"
                     placeholder="Name*"
-                    variant="outlined"
                     fullWidth
                     value={formData.name}
                     onChange={handleChange}
                     required
+                    sx={{
+                        '& .MuiOutlinedInput-root': {
+                            backgroundColor: '#F4F4F6',
+                            borderRadius: '12px',
+                        },
+                        '& .MuiOutlinedInput-notchedOutline': { border: 'none' }
+                    }}
                 />
                 <TextField
                     type="email"
                     name="email"
                     placeholder="Email*"
-                    variant="outlined"
                     fullWidth
                     value={formData.email}
                     onChange={handleChange}
                     required
+                    sx={{
+                        '& .MuiOutlinedInput-root': {
+                            backgroundColor: '#F4F4F6',
+                            borderRadius: '12px',
+                        },
+                        '& .MuiOutlinedInput-notchedOutline': { border: 'none' }
+                    }}
                 />
                 <TextField
                     type="text"
                     name="bookingDate"
                     placeholder="Booking date*"
-                    variant="outlined"
                     fullWidth
                     value={formData.bookingDate}
                     onChange={handleChange}
@@ -88,22 +99,38 @@ const BookingForm: React.FC = () => {
                         if (!e.target.value) (e.target as HTMLInputElement).type = 'text';
                     }}
                     required
+                    sx={{
+                        '& .MuiOutlinedInput-root': {
+                            backgroundColor: '#F4F4F6',
+                            borderRadius: '12px',
+                        },
+                        '& .MuiOutlinedInput-notchedOutline': { border: 'none' }
+                    }}
                 />
                 <TextField
                     name="comment"
                     placeholder="Comment"
-                    variant="outlined"
                     fullWidth
                     multiline
                     rows={4}
                     value={formData.comment}
                     onChange={handleChange}
+                    sx={{
+                        '& .MuiOutlinedInput-root': {
+                            backgroundColor: '#F4F4F6',
+                            borderRadius: '12px',
+                        },
+                        '& .MuiOutlinedInput-notchedOutline': { border: 'none' }
+                    }}
                 />
                 <Button
                     type="submit"
                     variant="contained"
                     color="primary"
-                    sx={{ mt: '10px' }}
+                    sx={{
+                        mt: '10px', p: '16px', borderRadius: '200px', fontSize: '16px', fontWeight: 500,
+                        textTransform: 'none', alignSelf: 'center', width: '160px', bgcolor: '#E44848'
+                    }}
                 >
                     Send
                 </Button>

@@ -27,20 +27,20 @@ const HomePage: React.FC = () => {
                 <Box
                     sx={{
                         flex: 1,
-                        backgroundImage: `url(${backgroundImage})`,
+                        backgroundImage: `linear-gradient(rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.2)), url(${backgroundImage})`,
                         backgroundSize: 'cover',
                         backgroundPosition: 'center',
                         backgroundRepeat: 'no-repeat',
                         position: 'relative',
                         display: 'flex',
-
+                        transform: 'scaleX(-1)',
                     }}
                 >
                     <Container
                         maxWidth={false}
                         sx={{
-                            maxWidth: "90%",
-                            px: { xs: '12px', md: '12px' },
+                            maxWidth: '1700px',
+                            px: { xs: '20px', md: '80px' },
                             mx: 'auto',
                             position: 'relative',
                             zIndex: 1,
@@ -48,7 +48,7 @@ const HomePage: React.FC = () => {
                             flexDirection: 'column',
                             justifyContent: 'center',
                             alignItems: 'flex-start',
-
+                            transform: 'scaleX(-1)',
                         }}
                     >
                         <Box sx={{ maxWidth: 600 }}>
